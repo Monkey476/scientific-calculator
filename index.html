@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="calculator">
+            <form action="">
+                <div class="display">
+                    <input type="text" name="display" id="display" readonly>
+                </div>
+            </form>
+
+        <div class="advance-features">
+            <input type="button" value="e" onclick="calculateE()" class="scientific">
+            <input type="button" value="log" class="scientific" onclick="calculateLog()">
+            <input type="button" value="ln" class="scientific" onclick="calculateln()">
+            <input type="button" value="x^2" class="scientific" onclick="calculatePow()">
+            <input type="button" value="Deg" class="scientific-" onclick="toggleDegreeMode()">
+
+
+        </div>
+
+        <div class="advance-feature">
+            <input type="button" value="&radic;" onclick="calculateSquareRoot()" class="scientific">
+            <input type="button" value="π" onclick="calculatePi()" class="scientific">
+            <input type="button" value="sin" onclick="calculateSin()" class="scientific">
+            <input type="button" value="cos" onclick="calculateCos()" class="scientific">
+            <input type="button" value="tan" onclick="calculateTan()" class="scientific">
+        </div>
+
+
+        <div>
+            <input type="button" value="AC" onclick="clearDisplay()" class="operator">
+            <input type="button" value="DE" onclick="deleteLastChar()" class="operator">
+            <input type="button" value="." onclick="addDecimal() " class="operator">
+            <input type="button" value="/" onclick="appendToDisplay('/')" class="operator">
+
+        </div>
+
+        <div>
+            <input type="button" value="7" onclick="appendToDisplay('7')" class="normal">
+            <input type="button" value="8" onclick="appendToDisplay('8')" class="normal">
+            <input type="button" value="9" onclick="appendToDisplay('9')" class="normal">
+            <input type="button" value="*" onclick="appendToDisplay('*')" class="operator">
+        </div>
+
+        <div>
+            <input type="button" value="4" onclick="appendToDisplay('4')" class="normal">
+            <input type="button" value="5" onclick="appendToDisplay('5')" class="normal">
+            <input type="button" value="6" onclick="appendToDisplay('6')" class="normal">
+            <input type="button" value="-" onclick="appendToDisplay('-')" class="operator">
+        </div>
+        
+        <div>
+            <input type="button" value="1" onclick="appendToDisplay('1')" class="normal">
+            <input type="button" value="2" onclick="appendToDisplay('2')" class="normal">
+            <input type="button" value="3" onclick="appendToDisplay('3')" class="normal">
+            <input type="button" value="+" onclick="appendToDisplay('+')" class="operator">
+        </div>
+        
+        <div>
+            <input type="button" value="00" onclick="appendToDisplay('00')" class="normal">
+            <input type="button" value="0" onclick="appendToDisplay('0')" class="normal">
+            <input type="button" value="=" onclick="calculateResult()" class="operatorr">
+        </div>
+    </div>
+</div>
+
+<script>
+    const display = document.getElementById("display");
+
+
+
+    function clearDisplay() {
+        display.value = '';
+    }
+
+    function deleteLastChar() {
+        display.value = display.value.slice(0, -1);
+    }
+
+    function addDecimal() {
+        if (!display.value.includes('.')) {
+            display.value += '.';
+        }
+    }
+
+    function appendToDisplay(value) {
+        display.value += value;
+    }
+
+    function calculateResult() {
+        try {
+            display.value = eval(display.value);
+        } catch (error) {
+            display.value += 'Error';
+        }
+    }
+
+    function calculateSquareRoot() {
+        display.value = Math.sqrt(eval(display.value));
+    }
+
+    function calculatePi() {
+        display.value += Math.PI;
+    }
+
+    function calculateSin() {
+        const value = parseFloat(display.value);
+        if(!isNaN(value)) {
+            display.value = Math.sin(value);
+        } else {
+            display.value = 'Invalid Input'
+        }
+    }
+
+    function calculateCos() {
+        const value = parseFloat(display.value) 
+            if(!isNaN(value)) {
+                display.value = Math.cos(value)
+            }
+            else {
+                display.value = 'Invalid Input'
+            }
+        }
+
+        function calculateTan() {
+        const value = parseFloat(display.value) 
+            if(!isNaN(value)) {
+                display.value = Math.tan(value)
+            }
+            else {
+                display.value = 'Invalid Input'
+            }
+        }
+
+        function calculateE() {
+            display.value = Math.E;
+        }
+
+
+        function calculateLog() {
+            const value = parseFloat(display.value)
+            if(!isNaN(value) && value > 0){
+                display.value = Math.log10(value);
+            } else {
+                display.value = 'Invalid Input'
+            }
+            
+        }
+
+        
+let degreeMode = true // Inicialmente, la calculadora está en modo grados
+
+function toggleDegreeMode() {
+    degreeMode = !degreeMode;
+    updateButtonLabel();
+} // Cambia el modo actual// Actualiza la etiqueta del botón
+
+function updateButtonLabel() {
+    const button = document.querySelector('.scientific-');
+    button.value = degreeMode ? 'DEG' : 'RAD';
+}
+
+function calculateSin() {
+    const value = parseFloat(display.value);
+    if (!isNaN(value)) {
+        // Usa la función sin() o Math.sin() según el modo seleccionado
+        display.value = degreeMode ? Math.sin((value * Math.PI) / 180) : Math.sin(value)
+        //display.value = degreeMode ? Math.sin((value * Math.PI) / 180) : Math.sin(value);
+    } else {
+        display.value = 'Invalid Input';
+    }
+}
+
+function calculateCos() {
+    const value = parseFloat(display.value);
+    if (!isNaN(value)) {
+        
+        display.value = degreeMode ? Math.cos((value * Math.PI) / 180) : Math.cos(value);
+    } else {
+        display.value = 'Invalid Input';
+    }
+}
+
+function calculateTan() {
+    const value = parseFloat(display.value);
+    if(!isNaN(value)) {
+        display.value = degreeMode ? Math.cos((value * Math.PI) * 180) : Math.cos(value);
+    } 
+    else {
+        display.value = 'Invalid Input'
+    }
+}
+</script>
+
+</body>
+</html>
